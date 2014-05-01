@@ -1,0 +1,14 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET        /                    controllers.CountsController.index
+GET        /hour                controllers.CountsController.hour(year:Int, month:Int, day:Int, hour:Int)
+GET        /boost               controllers.BoostController.list(year:Int, month:Int, day:Int, hour:Int)
+
+# Map static resources from the /public folder to the /assets URL path
+GET        /assets/*file        controllers.Assets.at(path="/public", file)
+GET        /about               controllers.Application.about
+
+    
