@@ -1,9 +1,6 @@
 package controllers
 
-import play.api._
 import play.api.mvc._
-import models._
-import scala.collection.immutable.Map
 import java.util._
 import play.api.db.slick._
 
@@ -30,8 +27,8 @@ object CountsController extends Controller {
     val calJfrom, calJto = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
     calJfrom.set(year, month-1, day, hour-1, 0)
     calJto.set(year,month-1,day,hour,0)
-  calJto.add(Calendar.HOUR_OF_DAY, 9);
-    calJfrom.add(Calendar.HOUR_OF_DAY, 9);
+    calJto.add(Calendar.HOUR_OF_DAY, 9)
+    calJfrom.add(Calendar.HOUR_OF_DAY, 9)
     Ok(views.html.lists(counts, calJfrom, calJto, calJfrom, calJto))
   }
 }

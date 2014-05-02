@@ -1,5 +1,5 @@
 @* @(list: List[models.CountOrder]) *@
-@(list: List[(Int, Int,String, Int, Option[(Int,Int)])], fromCal:java.util.Calendar, toCal:java.util.Calendar, prevCalUCS:java.util.Calendar, nextCalUCS:java.util.Calendar)
+@(list: List[(Int, Int, String, Int, Int, Option[Int], Int)], fromCal: java.util.Calendar, toCal: java.util.Calendar, prevCalUCS: java.util.Calendar, nextCalUCS: java.util.Calendar)
 @import java.util.Calendar
 @import helper.twitterBootstrap._
 @import models._
@@ -8,46 +8,35 @@
     <div class="row">
         <div class="col-md-9" role="main">
             <h1>Wikipedia 閲覧数ランキング</h1>
-            <p><div class="text-center"><< @fromCal.get(Calendar.YEAR).@(fromCal.get(Calendar.MONTH)+1) .@fromCal.get(Calendar.DAY_OF_MONTH) @fromCal.get(Calendar.HOUR_OF_DAY):00〜
-                @toCal.get(Calendar.YEAR).@(toCal.get(Calendar.MONTH)+1) .@toCal.get(Calendar.DAY_OF_MONTH) @toCal.get(Calendar.HOUR_OF_DAY):00 >></div></p>
+            <p><div class="text-center">
+            << @fromCal.get(Calendar.YEAR).@(fromCal.get(Calendar.MONTH) + 1) .@fromCal.get(Calendar.DAY_OF_MONTH) @fromCal.get(Calendar.HOUR_OF_DAY):00〜
+            @toCal.get(Calendar.YEAR).@(toCal.get(Calendar.MONTH) + 1) .@toCal.get(Calendar.DAY_OF_MONTH) @toCal.get(Calendar.HOUR_OF_DAY):00 >></div></p>
             <table class="table table-hover">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>タイトル</th>
-                        <th>回数変化</th>
-                        <th>順位変化</th>
-                        <th>回数</th>
+                        <th>閲覧回数</th>
 
                     </tr>
                 </thead>
                 <tbody>
                 @list.map { line =>
-                <tr>
-                <td>@line._1</td>
-                <td><a href="http://ja.wikipedia.org/wiki/@line._3">@line._3.replaceAll("_"," ")</a></td>
-                <td>
-                @line._5 match {
-                    case Some(value) => {
-                        @value._1
-                    }
-                    case None => {
-                        新規
-                    }
-                }
-                </td>
-                <td>
-                @line._5 match {
-                    case Some(value) => {
-                        @value._2
-                    }
-                    case None => {
-                        新規
-                    }
-                }
-                </td>
-                <td>@line._4</td>
-                </tr>
+                    <tr>
+                        <td>@line._1</td>
+                        <td><a href="http://ja.wikipedia.org/wiki/@line._3">@line._3.replaceAll("_", " ")</a>
+                            @line._6 match {
+                                case Some(value) => {}
+                                case None => {
+                                    <span class="label label-info">New!</span>
+                                }
+                            }
+                            @if(line._7 <= 5){
+                                <span class="label label-danger">急上昇</span>
+                            }
+                        </td>
+                        <td>@line._4</td>
+                    </tr>
                 }
                 </tbody>
             </table>
